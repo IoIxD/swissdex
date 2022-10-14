@@ -1,10 +1,11 @@
 
 // unfortunately rust seems to have no templates library similar to golang's
 
-use std::{fmt::Write, fs::ReadDir};
+use std::{fmt::Write, fs::ReadDir, time::UNIX_EPOCH};
 
 use pretty_bytes::converter::convert;
-use humanize_rs::time::Time;
+
+use chrono::{offset::TimeZone, Utc};
 
 pub fn header(title: &String) -> String {
     format!(r#"
@@ -124,14 +125,14 @@ pub fn dir(dir: ReadDir, dir_name: &String) -> String {
                     size = format!("{}",convert(md.len() as f64));
                 }
 
-                let mod_date = match md.modified() {
-                    Ok(a) => match format!("{:?}", a).parse::<Time>() {
-                        Ok(b) => format!("{:?}",b),
-                        Err(err) => format!("error: {:?}",err),
-                    }
-                    Err(err) => format!("{:?}",err),
-                };
-
+                let mod_i64 = md.modified()
+                                .unwrap()
+                                .duration_since(UNIX_EPOCH)
+                                .unwrap().
+                                as_secs()
+                                as i64;
+                let mod_date = Utc.timestamp(mod_i64, 0).to_string();
+                
                 _ = buffer.write_str(file_listing(path, dir_marker, size, mod_date).as_str());
             }
             Err(err) => {
