@@ -1,9 +1,7 @@
 pub mod templates;
 
-use hyper::body::{HttpBody, Bytes};
-use hyper::http::Extensions;
-use hyper::http::response::Parts;
-use hyper::{Body, Request, Response, Server, StatusCode, Version, HeaderMap};
+use hyper::body::{Bytes};
+use hyper::{Body, Request, Response, Server};
 use hyper::service::{make_service_fn, service_fn};
 
 use std::fs::{File, read_dir, self};
