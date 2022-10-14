@@ -6,7 +6,6 @@ a,a:visited {color: inherit;}
 th, td {text-align: left;}
 
 hr {
-    border: none;
     border-top: 1px solid #dddda8;
     max-width: 600px;
     margin: 10px auto;
@@ -20,18 +19,18 @@ table {
 }
 
 th:nth-child(1),
-td:nth-child(1) {
+td:nth-child(1){
     width: 80%;
 }
 
 th:nth-child(2),
 td:nth-child(2),
 th:nth-child(3),
-td:nth-child(3) {
+td:nth-child(3){
     width: 10%;
 }
 
-th, td {
+th,td {
     white-space: nowrap;
 }
 
@@ -97,12 +96,12 @@ input {
         position: relative;
     }
 
-    .searchpair .searchtext {
+    .searchtext {
         font-size: 0px;
         margin-right: 0px!important;
     }
 
-    .searchpair .searchtext:before {
+    .searchtext:before {
         content: ".*";
         font-size: initial!important;
         position: absolute; 
@@ -185,7 +184,7 @@ input {
         background: #dddddd!important;
     }
 
-    article img:not([src$=".jpg"]):not([src$=".jpeg"]) {
+    article img:not([src$=".jpg"]):not([src$=".jpeg"]){
         background-color: white;
         border: 5px solid white;
         box-sizing: border-box;

@@ -7,6 +7,8 @@ use pretty_bytes::converter::convert;
 
 use chrono::{offset::TimeZone, Utc};
 
+use crate::resources;
+
 pub fn header(title: &String) -> String {
     format!(r#"
     <!doctype html>
@@ -73,12 +75,17 @@ pub fn dir(dir: ReadDir, dir_name: &String) -> String {
             _ = crumbs_html.write_str(format!("<a href='/{crumb}'>/{crumb}</a>").as_str());
         }
     });
+
+    if crumbs_html == "" {
+        crumbs_html = "/".to_string();
+    }
     
     _ = buffer.write_str(format!(r#"
         <header>
             {crumbs_html}
         </header>
     "#).as_str());
+    
     _ = buffer.write_str(search_bar);
 
     _ = buffer.write_str(r#"
@@ -90,13 +97,13 @@ pub fn dir(dir: ReadDir, dir_name: &String) -> String {
     </tr>
     "#);
 
-    if !dir_name.eq(".") {
-    _ = buffer.write_str("
-    <tr>
-        <td><a href='./..'><span class='name'>../</span></a></td>
-        <td>&mdash;</td>
-        <td>&mdash;</td>
-    </tr>");
+    if !dir_name.eq("./") {
+        _ = buffer.write_str("
+        <tr>
+            <td><a href='./..'><span class='name'>../</span></a></td>
+            <td>&mdash;</td>
+            <td>&mdash;</td>
+        </tr>");
     }
 
 
@@ -143,6 +150,8 @@ pub fn dir(dir: ReadDir, dir_name: &String) -> String {
 
     _ = buffer.write_str(footer);
 
+    buffer = sanitize_html(buffer);
+
     buffer
 }
 
@@ -167,4 +176,26 @@ format!(r#"
     <td>{size}</td>
     <td>{mod_date}</td>
 </tr>"#).replace("    ","")
+}
+
+pub fn sanitize_html(str: String) -> String {
+    let mut new_html =   str
+                    .replace("\n","")
+                    .replace("  ","");
+    resources::HTML_IDCLASS_REGEX.find_iter(&str)
+    .for_each(|mat| {
+        let str_raw = mat.as_str();
+        let str_canon = &str_raw.replace("class='", ".")
+                        .replace("id='", "#");
+
+        match resources::STYLE_MAP.get(str_canon) {
+            Some(a) => {
+                let a_canon = a.replace(".", "class='")
+                               .replace("#", "id='");
+                new_html = new_html.replace(str_raw, &a_canon);
+            }
+            None => {}
+        };
+    });
+    new_html
 }
