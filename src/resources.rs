@@ -51,15 +51,14 @@ fn css_sanitize(css: String) -> String {
             }
         };
     });
-    new_css = COMMENT_REGEX.replace(&new_css, "").to_string();
-
-    /*new_css = new_css
+    new_css = new_css
             .replace("\n","")
             .replace("\r","")
             .replace("  ","")
             .replace(": ",":");
-    
-    */
+
+    new_css = COMMENT_REGEX.replace_all(&new_css, "").to_string();
+
     new_css
 }
 

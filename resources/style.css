@@ -86,10 +86,9 @@ input {
 
 /* the regex button next to it */
 
-/*  wrapping this in @media disables it on older browsers like RetroZilla that don't support 
-    button styling. the site will look ugly anyways because svgs, box-shadows, etc. aren't 
-    supported and there's many oddities to account for but it's at least usable.
-*/
+/*  wrapping this in @media disables it on older browsers like RetroZilla that don't support */
+/*  button styling. the site will look ugly anyways because svgs, box-shadows, etc. aren't */
+/*  supported and there's many oddities to account for but it's at least usable. */
 
 @media {
     .searchpair {
