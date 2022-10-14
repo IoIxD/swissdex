@@ -1,5 +1,4 @@
 pub mod templates;
-pub mod file;
 
 use hyper::body::{HttpBody, Bytes};
 use hyper::http::Extensions;

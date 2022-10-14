@@ -14,7 +14,7 @@ pub fn header(title: &String) -> String {
     <head>
         <meta charset=utf-8>
         <title>{title}</title>
-        <link rel='stylesheet' href='/static/style.css' type='text/css'>
+        <link rel='stylesheet' href='/resources/style.css' type='text/css'>
     </head>
     <body>
         <svg version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' height='0' width='0' style='position: absolute;'>
