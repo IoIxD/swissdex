@@ -68,7 +68,9 @@ pub fn dir(dir: ReadDir, dir_name: &String) -> String {
     let crumbs = dir_name_canon.split("/").to_owned();
     
     crumbs.for_each(|crumb| {
-        _ = crumbs_html.write_str(format!("<a href='/{crumb}'>{crumb}/</a>").as_str());
+        if(crumb != "") {
+            _ = crumbs_html.write_str(format!("<a href='/{crumb}'>/{crumb}</a>").as_str());
+        }
     });
     
     _ = buffer.write_str(format!(r#"
