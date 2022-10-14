@@ -10,3 +10,4 @@ tokio = { version = "1", features = ["full"] }
 hyper = { version = "0.14", features = ["http1","server","runtime","tcp","stream"]}
 "humanize-rs" = "0.1"
 "unroll" = "0.1.5"
+"pretty-bytes" = "0.2"

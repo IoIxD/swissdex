@@ -3,7 +3,7 @@
 
 use std::{fmt::Write, fs::ReadDir};
 
-use humanize_rs::bytes::Bytes;
+use pretty_bytes::converter::convert;
 use humanize_rs::time::Time;
 
 pub fn header(title: &String) -> String {
@@ -118,19 +118,16 @@ pub fn dir(dir: ReadDir, dir_name: &String) -> String {
                 let (dir_marker, size): (String, String);
                 if f.file_type().unwrap().is_dir() {
                     dir_marker = "/".to_string();
-                    size = match format!("{}",md.len()).parse::<Bytes>() {
-                        Ok(a) => format!("{:?}",a.size()),
-                        Err(err) => format!("{:?}",err),
-                    };
+                    size = "-".to_string();
                 } else {
                     dir_marker = "".to_string();
-                    size = "-".to_string();
+                    size = format!("{}",convert(md.len() as f64));
                 }
 
                 let mod_date = match md.modified() {
                     Ok(a) => match format!("{:?}", a).parse::<Time>() {
                         Ok(b) => format!("{:?}",b),
-                        Err(err) => format!("{:?}",err),
+                        Err(err) => format!("error: {:?}",err),
                     }
                     Err(err) => format!("{:?}",err),
                 };
